@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,11 @@ public class DialogTestFragment extends Fragment {
                     @NonNull
                     @Override
                     public Material mergeMaterial(@NonNull Context context, @NonNull Material material) {
+                        if (TextUtils.isEmpty(material.getPositiveButtonText())) {
+                            Material.Builder builder = material.rebuild(context);
+                            builder.setPositiveButton(android.R.string.ok, null);
+                            material = builder.build();
+                        }
                         return material;
                     }
 
