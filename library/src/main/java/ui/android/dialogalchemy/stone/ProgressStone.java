@@ -19,9 +19,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.NumberFormat;
 
-import ui.android.dialogalchemy.R;
 import ui.android.dialogalchemy.Material;
 import ui.android.dialogalchemy.PhilosopherStone;
+import ui.android.dialogalchemy.R;
 
 /**
  * Created by JasonYang on 2016/6/2.
@@ -57,7 +57,7 @@ public class ProgressStone implements PhilosopherStone {
     private Drawable indeterminateDrawable;
     private Drawable progressDrawable;
 
-    public ProgressStone() {
+    private ProgressStone() {
         this.progressNumberFormat = "%1d/%2d";
         this.progressPercentFormat = NumberFormat.getPercentInstance();
         this.progressPercentFormat.setMaximumFractionDigits(0);
