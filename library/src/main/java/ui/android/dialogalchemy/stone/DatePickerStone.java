@@ -25,6 +25,9 @@ public class DatePickerStone implements PhilosopherStone {
     private int dayOfMonth;
     private OnDatePickedListener listener;
 
+    private DatePickerStone() {
+    }
+
     @Override
     public int getLayoutResId() {
         return R.layout.dialog_date_picker;

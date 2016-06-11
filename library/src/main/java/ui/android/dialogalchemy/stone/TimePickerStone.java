@@ -20,6 +20,9 @@ public class TimePickerStone implements PhilosopherStone {
     private Integer minute;
     private OnTimePickedListener listener;
 
+    private TimePickerStone() {
+    }
+
     @Override
     public int getLayoutResId() {
         return R.layout.dialog_time_picker;

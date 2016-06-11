@@ -30,6 +30,9 @@ public class EditTextStone implements PhilosopherStone {
     private InputFilter[] inputFilters;
     private OnTextAcceptedListener listener;
 
+    private EditTextStone() {
+    }
+
     @Override
     public int getLayoutResId() {
         return R.layout.dialog_input_field;

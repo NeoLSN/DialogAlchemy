@@ -1,8 +1,5 @@
 package ui.android.dialogalchemy.stone;
 
-import ui.android.dialogalchemy.PhilosopherStone;
-
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +9,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import ui.android.dialogalchemy.Material;
+import ui.android.dialogalchemy.PhilosopherStone;
 import ui.android.dialogalchemy.R;
 
 /**
@@ -27,6 +25,9 @@ public class NumberPickerStone implements PhilosopherStone {
     private boolean canUseKeyBoard = false;
     private CharSequence description;
     private OnNumberPickedListener listener;
+
+    private NumberPickerStone() {
+    }
 
     @Override
     public int getLayoutResId() {
