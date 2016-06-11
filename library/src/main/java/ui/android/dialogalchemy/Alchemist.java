@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class Alchemist extends DialogFragment {
 
+    private static final String OLD_STATE = "old_state";
     private static final String TRUE_NAME = "true_name";
 
     private static final String MATERIAL = "material";
@@ -31,6 +32,7 @@ public class Alchemist extends DialogFragment {
     private TransmutationCircle circle;
     private int orientation = -1;
     private boolean onRotating = false;
+    private boolean isInit = false;
 
     public Alchemist() {
     }
@@ -57,6 +59,7 @@ public class Alchemist extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
+            isInit = savedInstanceState.getBoolean(OLD_STATE, false);
             trueName = savedInstanceState.getString(TRUE_NAME);
             Map<String, Object> soul = GateOfTruth.getInstance().withdraw(trueName);
             material = (Material) soul.get(MATERIAL);
@@ -79,7 +82,8 @@ public class Alchemist extends DialogFragment {
                 @Override
                 public void onShow(DialogInterface dialog) {
                     circle.bindCustomView((Dialog) dialog, material);
-                    if (material.getOnShowListener() != null) {
+                    if (material.getOnShowListener() != null && !isInit) {
+                        isInit = true;
                         material.getOnShowListener().onShow(dialog);
                     }
                 }
@@ -119,6 +123,8 @@ public class Alchemist extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(OLD_STATE, isInit);
+
         int newOrientation = getActivity().getResources().getConfiguration().orientation;
         onRotating = orientation != newOrientation;
 
