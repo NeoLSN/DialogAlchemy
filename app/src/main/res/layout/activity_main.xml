@@ -8,7 +8,7 @@
     tools:context="ui.android.dialogalchemy.example.MainActivity">
 
     <fragment
-        class="ui.android.dialogalchemy.example.DialogTestFragment"
+        class="ui.android.dialogalchemy.example.DialogExampleFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

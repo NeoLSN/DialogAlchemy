@@ -23,7 +23,7 @@ import ui.android.dialogalchemy.PhilosopherStone;
 /**
  * Created by JasonYang on 2016/6/7.
  */
-public class DialogTestFragment extends Fragment {
+public class DialogExampleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +47,6 @@ public class DialogTestFragment extends Fragment {
     private void createDialog() {
         Material material = new Material.Builder(getActivity())
                 .setTitle("Color palette")
-                .setPositiveButton(android.R.string.ok, null)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPhilosopherStone(new PhilosopherStone() {
 
