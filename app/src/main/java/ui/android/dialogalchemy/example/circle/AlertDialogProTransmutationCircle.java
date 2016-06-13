@@ -25,11 +25,6 @@ public class AlertDialogProTransmutationCircle implements TransmutationCircle {
 
         final PhilosopherStone stone = material.getPhilosopherStone();
 
-        //manipulate material
-        if (stone != null) {
-            material = stone.mergeMaterial(context, material);
-        }
-
         final AlertDialogPro.Builder builder;
         if (material.getTheme() != 0) {
             builder = new AlertDialogPro.Builder(context, material.getTheme());

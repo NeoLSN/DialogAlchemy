@@ -21,15 +21,11 @@ public class MaterialDialogsTransmutationCircle implements TransmutationCircle {
 
     @Override
     public Dialog createDialog(@NonNull Context context, @NonNull Material material) {
-        final PhilosopherStone stone = material.getPhilosopherStone();
-
-        //manipulate material
-        if (stone != null) {
-            material = stone.mergeMaterial(context, material);
-        }
 
         //NOT support theme, custom title, inverseBackgroundForced,
         // onItemSelectedListener, single choice with custom adapter
+
+        final PhilosopherStone stone = material.getPhilosopherStone();
 
         final AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
 

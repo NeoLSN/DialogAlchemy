@@ -74,6 +74,10 @@ public class Alchemist extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final PhilosopherStone stone = material.getPhilosopherStone();
+        if (stone != null) {
+            material = stone.mergeMaterial(getActivity(), material);
+        }
         setCancelable(material.isCancelable());
         TransmutationCircle transmutationCircle = circle;
         Dialog dialog = transmutationCircle.createDialog(getActivity(), material);
