@@ -11,17 +11,21 @@ import ui.android.dialogalchemy.circle.MetalTransmutationCircle;
  */
 public class DialogAlchemy {
 
+    private static final TransmutationCircle DEFAULT_CIRCLE = new MetalTransmutationCircle();
+    private static TransmutationCircle CUSTOM_CIRCLE = null;
+
     private DialogAlchemy() {
     }
 
     public static Alchemist show(@NonNull FragmentManager fragmentManager,
             @NonNull Material model) {
-        return show(fragmentManager, model, new MetalTransmutationCircle());
+        return show(fragmentManager, model, CUSTOM_CIRCLE != null ? CUSTOM_CIRCLE : DEFAULT_CIRCLE);
     }
 
     public static Alchemist show(@NonNull FragmentManager fragmentManager,
             @NonNull Material model, String tag) {
-        return show(fragmentManager, model, new MetalTransmutationCircle(), tag);
+        return show(fragmentManager, model, CUSTOM_CIRCLE != null ? CUSTOM_CIRCLE : DEFAULT_CIRCLE,
+                tag);
     }
 
     public static Alchemist show(@NonNull FragmentManager fragmentManager,
@@ -42,5 +46,9 @@ public class DialogAlchemy {
         alchemist.setMaterial(model);
         alchemist.setTransmutationCircle(circle);
         return alchemist;
+    }
+
+    public static void setDefaultCircle(TransmutationCircle circle) {
+        CUSTOM_CIRCLE = circle;
     }
 }
