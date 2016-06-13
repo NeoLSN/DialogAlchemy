@@ -51,13 +51,13 @@ public class ColorPaletteStone implements PhilosopherStone {
 
     @NonNull
     @Override
-    public Material mergeMaterial(@NonNull Context context, @NonNull Material material1) {
-        if (TextUtils.isEmpty(material1.getPositiveButtonText())) {
-            Material.Builder builder = material1.rebuild(context);
+    public Material mergeMaterial(@NonNull Context context, @NonNull Material material) {
+        if (TextUtils.isEmpty(material.getPositiveButtonText())) {
+            Material.Builder builder = material.rebuild(context);
             builder.setPositiveButton(android.R.string.ok, null);
-            material1 = builder.build();
+            material = builder.build();
         }
-        return material1;
+        return material;
     }
 
     @Override
