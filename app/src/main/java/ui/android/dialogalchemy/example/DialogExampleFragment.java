@@ -19,6 +19,7 @@ import android.widget.Toast;
 import ui.android.dialogalchemy.DialogAlchemy;
 import ui.android.dialogalchemy.Material;
 import ui.android.dialogalchemy.PhilosopherStone;
+import ui.android.dialogalchemy.circle.MetalTransmutationCircle;
 import ui.android.dialogalchemy.example.circle.AlertDialogProTransmutationCircle;
 import ui.android.dialogalchemy.example.circle.MaterialDialogsTransmutationCircle;
 
@@ -64,7 +65,7 @@ public class DialogExampleFragment extends Fragment {
 
     private void createDialog() {
         Material material = createMaterial();
-        DialogAlchemy.show(getFragmentManager(), material);
+        DialogAlchemy.show(getFragmentManager(), material, new MetalTransmutationCircle());
     }
 
     private void createAlertProDialog() {
