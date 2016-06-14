@@ -5,111 +5,159 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import ui.android.dialogalchemy.Material;
 import ui.android.dialogalchemy.PhilosopherStone;
 import ui.android.dialogalchemy.TransmutationCircle;
+import ui.android.dialogalchemy.example.stone.SorceryStone;
 
 /**
  * Created by JasonYang on 2016/6/13.
  */
 public class MaterialDialogsTransmutationCircle implements TransmutationCircle {
-
     @Override
     public Dialog createDialog(@NonNull Context context, @NonNull Material material) {
+
         final PhilosopherStone stone = material.getPhilosopherStone();
 
-        //manipulate material
-        if (stone != null) {
-            material = stone.mergeMaterial(context, material);
-        }
-
-        //NOT support theme, custom title, inverseBackgroundForced,
-        // onItemSelectedListener, single choice with custom adapter
-
-        final AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
 
         builder.autoDismiss(true);
 
         if (!TextUtils.isEmpty(material.getTitle())) {
-            builder.setTitle(material.getTitle());
+            builder.title(material.getTitle());
         }
         if (!TextUtils.isEmpty(material.getMessage())) {
-            builder.setMessage(material.getMessage());
+            builder.content(material.getMessage());
         }
         if (material.getIcon() != 0) {
-            builder.setIcon(material.getIcon());
+            builder.iconRes(material.getIcon());
         }
         if (material.getIconAttribute() != 0) {
-            builder.setIconAttribute(material.getIconAttribute());
+            builder.iconAttr(material.getIconAttribute());
         }
 
         // setup choice mode
         if (material.isMultiChoice()) {
-            String[] items = new String[material.getItems().length];
-            for (int i = 0; i < items.length; i++) {
-                items[i] = material.getItems()[i].toString();
+            final DialogInterface.OnMultiChoiceClickListener listener =
+                    material.getOnMultiChoiceClickListener();
+            final boolean[] checkedItems = material.getCheckedItems();
+            builder.items(material.getItems());
+            Integer selectedIndicesArr[] = null;
+            if (checkedItems != null) {
+                ArrayList<Integer> selectedIndices = new ArrayList<Integer>();
+                for (int i = 0; i < checkedItems.length; i++) {
+                    if (checkedItems[i]) {
+                        selectedIndices.add(i);
+                    }
+                }
+                selectedIndicesArr = selectedIndices.toArray(new Integer[selectedIndices.size()]);
             }
-            builder.setMultiChoiceItems(items, material.getCheckedItems(),
-                    material.getOnMultiChoiceClickListener());
+
+            builder.itemsCallbackMultiChoice(selectedIndicesArr,
+                    new MaterialDialog.ListCallbackMultiChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, Integer[] which,
+                                CharSequence[] text) {
+                            List<Integer> whichList = Arrays.asList(which);
+                            if (checkedItems != null) {
+                                for (int i = 0; i < checkedItems.length; i++) {
+                                    boolean oldChecked = checkedItems[i];
+                                    checkedItems[i] = whichList.contains(i);
+                                    if (listener != null && oldChecked != checkedItems[i]) {
+                                        listener.onClick(dialog, i, checkedItems[i]);
+                                    }
+                                }
+                            }
+                            return true;
+                        }
+                    });
         } else if (material.isSingleChoice()) {
-            String[] items = new String[material.getItems().length];
-            for (int i = 0; i < items.length; i++) {
-                items[i] = material.getItems()[i].toString();
-            }
-            builder.setSingleChoiceItems(items, material.getCheckedItem(),
-                    material.getOnClickListener());
+            final DialogInterface.OnClickListener listener = material.getOnClickListener();
+            builder.items(material.getItems());
+            builder.itemsCallbackSingleChoice(material.getCheckedItem(),
+                    new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View itemView, int which,
+                                CharSequence text) {
+                            if (listener != null) {
+                                listener.onClick(dialog, which);
+                            }
+                            return true;
+                        }
+                    });
         } else if (material.getAdapter() != null) {
-            builder.setAdapter(material.getAdapter(), material.getOnClickListener());
+            final DialogInterface.OnClickListener listener = material.getOnClickListener();
+            builder.adapter(material.getAdapter(), new MaterialDialog.ListCallback() {
+                @Override
+                public void onSelection(MaterialDialog dialog, View itemView, int which,
+                        CharSequence text) {
+                    if (listener != null) {
+                        listener.onClick(dialog, which);
+                    }
+                }
+            });
         } else if (material.getItems() != null) {
-            builder.setItems(material.getItems(), material.getOnClickListener());
+            builder.items(material.getItems());
+            final DialogInterface.OnClickListener listener = material.getOnClickListener();
+            builder.itemsCallback(new MaterialDialog.ListCallback() {
+                @Override
+                public void onSelection(MaterialDialog dialog, View itemView, int which,
+                        CharSequence text) {
+                    if (listener != null) {
+                        listener.onClick(dialog, which);
+                    }
+                }
+            });
         }
 
         // setup button
-        DialogInterface.OnClickListener wrapper = new ButtonListenerWrapper(material, stone);
+        ButtonListenerWrapper wrapper = new ButtonListenerWrapper(material, stone);
+        builder.onAny(wrapper);
         if (!TextUtils.isEmpty(material.getPositiveButtonText())) {
-            builder.setPositiveButton(material.getPositiveButtonText(), wrapper);
+            builder.positiveText(material.getPositiveButtonText());
         }
         if (!TextUtils.isEmpty(material.getNegativeButtonText())) {
-            builder.setNegativeButton(material.getNegativeButtonText(), wrapper);
+            builder.negativeText(material.getNegativeButtonText());
         }
         if (!TextUtils.isEmpty(material.getNeutralButtonText())) {
-            builder.setNeutralButton(material.getNeutralButtonText(), wrapper);
-        }
-
-        // stone
-        if (stone != null && stone.getLayoutResId() != 0) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view = inflater.inflate(stone.getLayoutResId(), null);
-            builder.setView(view);
+            builder.neutralText(material.getNeutralButtonText());
         }
 
         if (material.getOnCancelListener() != null) {
-            builder.setOnCancelListener(material.getOnCancelListener());
+            builder.cancelListener(material.getOnCancelListener());
         }
         if (material.getOnDismissListener() != null) {
-            builder.setOnDismissListener(material.getOnDismissListener());
+            builder.dismissListener(material.getOnDismissListener());
         }
         if (material.getOnKeyListener() != null) {
-            builder.setOnKeyListener(material.getOnKeyListener());
+            builder.keyListener(material.getOnKeyListener());
         }
         if (material.getOnShowListener() != null) {
-            builder.setOnShowListener(material.getOnShowListener());
+            builder.showListener(material.getOnShowListener());
         }
-        builder.setCancelable(material.isCancelable());
+        builder.cancelable(material.isCancelable());
+        builder.canceledOnTouchOutside(material.isCanceledOnTouchOutside());
 
-        // create
-        final Dialog dialog = builder.create();
+        // stone
+        if (stone != null) {
+            if (stone instanceof SorceryStone) {
+                SorceryStone sorceryStone = (SorceryStone) stone;
+                increasePower(builder, sorceryStone);
+            } else if (stone.getLayoutResId() != 0) {
+                builder.customView(stone.getLayoutResId(), true);
+            }
+        }
 
-        // after create
-        dialog.setOnShowListener(material.getOnShowListener());
-        dialog.setCanceledOnTouchOutside(material.isCanceledOnTouchOutside());
-
-        return dialog;
+        return builder.build();
     }
 
     @Override
@@ -120,7 +168,69 @@ public class MaterialDialogsTransmutationCircle implements TransmutationCircle {
         }
     }
 
-    private static class ButtonListenerWrapper implements DialogInterface.OnClickListener {
+    private void increasePower(@NonNull MaterialDialog.Builder builder, @NonNull SorceryStone stone) {
+        builder.autoDismiss(stone.isAutoDismiss());
+        if (stone.getTitleColor() != 0) {
+            builder.titleColor(stone.getTitleColor());
+        }
+        if (stone.getContentColor() != 0) {
+            builder.contentColor(stone.getContentColor());
+        }
+        if (stone.getItemColor() != 0) {
+            builder.itemsColor(stone.getItemColor());
+        }
+        if (stone.getDividerColor() != 0) {
+            builder.dividerColor(stone.getDividerColor());
+        }
+        if (stone.getBackgroundColor() != 0) {
+            builder.backgroundColor(stone.getBackgroundColor());
+        }
+        if (stone.getWidgetColor() != 0) {
+            builder.widgetColor(stone.getWidgetColor());
+        }
+        if (stone.getPositiveColor() != null) {
+            builder.positiveColor(stone.getPositiveColor());
+        }
+        if (stone.getNegativeColor() != null) {
+            builder.negativeColor(stone.getNegativeColor());
+        }
+        if (stone.getNeutralColor() != null) {
+            builder.neutralColor(stone.getNeutralColor());
+        }
+        if (stone.getLinkColor() != null) {
+            builder.linkColor(stone.getLinkColor());
+        }
+        builder.titleGravity(stone.getTitleGravity());
+        builder.contentGravity(stone.getContentGravity());
+        builder.btnStackedGravity(stone.getBtnStackedGravity());
+        builder.itemsGravity(stone.getItemsGravity());
+        builder.buttonsGravity(stone.getButtonsGravity());
+        builder.contentLineSpacing(stone.getContentLineSpacingMultiplier());
+        if (stone.getButtonRippleColor() != 0) {
+            builder.buttonRippleColor(stone.getButtonRippleColor());
+        }
+        builder.theme(stone.getTheme());
+        if (stone.getBtnSelectorPositive() != 0) {
+            builder.btnSelector(stone.getBtnSelectorPositive(), DialogAction.POSITIVE);
+        }
+        if (stone.getBtnSelectorNeutral() != 0) {
+            builder.btnSelector(stone.getBtnSelectorNeutral(), DialogAction.NEUTRAL);
+        }
+        if (stone.getBtnSelectorNegative() != 0) {
+            builder.btnSelector(stone.getBtnSelectorNegative(), DialogAction.NEGATIVE);
+        }
+        if (stone.getListSelector() != 0) {
+            builder.listSelector(stone.getListSelector());
+        }
+        if (stone.getBtnSelectorStacked() != 0) {
+            builder.btnSelectorStacked(stone.getBtnSelectorStacked());
+        }
+        if (stone.getLayoutResId() != 0) {
+            builder.customView(stone.getLayoutResId(), stone.isWrapCustomViewInScroll());
+        }
+    }
+
+    private static class ButtonListenerWrapper implements MaterialDialog.SingleButtonCallback {
 
         private Material material;
         private PhilosopherStone philosopherStone;
@@ -131,28 +241,33 @@ public class MaterialDialogsTransmutationCircle implements TransmutationCircle {
         }
 
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
             switch (which) {
-                case Dialog.BUTTON_NEGATIVE:
+                case NEGATIVE:
                     if (material.getNegativeButtonListener() != null) {
-                        material.getNegativeButtonListener().onClick(dialog, which);
+                        material.getNegativeButtonListener().onClick(dialog, Dialog.BUTTON_NEGATIVE);
+                    }
+                    if (philosopherStone != null) {
+                        philosopherStone.onButtonClick(dialog, Dialog.BUTTON_NEGATIVE);
                     }
                     break;
-                case Dialog.BUTTON_NEUTRAL:
+                case NEUTRAL:
                     if (material.getNeutralButtonListener() != null) {
-                        material.getNeutralButtonListener().onClick(dialog, which);
+                        material.getNeutralButtonListener().onClick(dialog, Dialog.BUTTON_NEUTRAL);
+                    }
+                    if (philosopherStone != null) {
+                        philosopherStone.onButtonClick(dialog, Dialog.BUTTON_NEUTRAL);
                     }
                     break;
-                case Dialog.BUTTON_POSITIVE:
+                case POSITIVE:
                     if (material.getPositiveButtonListener() != null) {
-                        material.getPositiveButtonListener().onClick(dialog, which);
+                        material.getPositiveButtonListener().onClick(dialog, Dialog.BUTTON_POSITIVE);
+                    }
+                    if (philosopherStone != null) {
+                        philosopherStone.onButtonClick(dialog, Dialog.BUTTON_POSITIVE);
                     }
                     break;
                 default:
-            }
-
-            if (philosopherStone != null) {
-                philosopherStone.onButtonClick(dialog, which);
             }
         }
     }

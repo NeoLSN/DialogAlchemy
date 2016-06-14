@@ -1,4 +1,4 @@
-package ui.android.dialogalchemy;
+package ui.android.dialogalchemy.example;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -23,6 +23,6 @@ public class ExampleInstrumentationTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ui.android.dialogalchemy", appContext.getPackageName());
+        assertEquals("ui.android.dialogalchemy.example", appContext.getPackageName());
     }
 }

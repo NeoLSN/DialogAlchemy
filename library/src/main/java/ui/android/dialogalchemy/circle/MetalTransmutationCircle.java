@@ -23,11 +23,6 @@ public class MetalTransmutationCircle implements TransmutationCircle {
 
         final PhilosopherStone stone = material.getPhilosopherStone();
 
-        //manipulate material
-        if (stone != null) {
-            material = stone.mergeMaterial(context, material);
-        }
-
         final AlertDialog.Builder builder;
         if (material.getTheme() != 0) {
             builder = new AlertDialog.Builder(context, material.getTheme());
