@@ -77,30 +77,35 @@ public class DialogExampleFragment extends Fragment {
         hackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createHackingDialog();
+                createSorceryDialog();
             }
         });
     }
 
     private void createDialog() {
-        Material material = createMaterial();
+        Material material = createMaterial()
+                .setTitle("Support-v7")
+                .build();
         DialogAlchemy.show(getFragmentManager(), material, new MetalTransmutationCircle());
     }
 
     private void createAlertProDialog() {
-        Material material = createMaterial();
+        Material material = createMaterial()
+                .setTitle("Alert Dialog Pro - fengdai")
+                .build();
         DialogAlchemy.show(getFragmentManager(), material, new AlertDialogProTransmutationCircle());
     }
 
     private void createMDDialog() {
-        Material material = createMaterial();
+        Material material = createMaterial()
+                .setTitle("MD library - afollestad")
+                .build();
         DialogAlchemy.show(getFragmentManager(), material, new MaterialDialogsTransmutationCircle());
     }
 
-    private Material createMaterial() {
+    private Material.Builder createMaterial() {
         return new Material.Builder(getActivity())
-                .setTitle("Title")
-                .setMessage("Message")
+                .setMessage(R.string.example_long_content)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -121,8 +126,7 @@ public class DialogExampleFragment extends Fragment {
                         Context context = ((Dialog) dialog).getContext();
                         Toast.makeText(context, "Button NEUTRAL", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .build();
+                });
     }
 
     private void createColorPaletteDialog() {
@@ -133,7 +137,7 @@ public class DialogExampleFragment extends Fragment {
         DialogAlchemy.show(getFragmentManager(), builder.build());
     }
 
-    private void createHackingDialog() {
+    private void createSorceryDialog() {
         PhilosopherStone stone = new SorceryStone.Builder(getActivity())
                 .titleColor(Color.MAGENTA)
                 .titleGravity(GravityEnum.CENTER)
@@ -151,6 +155,7 @@ public class DialogExampleFragment extends Fragment {
                 .setPositiveButton(android.R.string.ok, null)
                 .setPhilosopherStone(stone);
 
-        DialogAlchemy.show(getFragmentManager(), builder.build(), new MaterialDialogsTransmutationCircle());
+        DialogAlchemy.show(getFragmentManager(), builder.build(),
+                new MaterialDialogsTransmutationCircle());
     }
 }
