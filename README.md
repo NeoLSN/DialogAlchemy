@@ -6,9 +6,9 @@ DialogAlchemy
 This is a dialog utility library. It provides a easy way to let developers deal with screen rotation issue.
 
 <p align="center">
-  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_portrait.png" height="300" alt="Portrait image" />
-  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/rotate.png" width="50" alt="Rotate screen" />
-  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_landscape.png" width="300" alt="Landscape image" />
+  <img src="https://github.com/NeoLSN/DialogAlchemy/blob/master/arts/device_portrait.png" height="300" alt="Portrait image" />
+  <img src="https://github.com/NeoLSN/DialogAlchemy/blob/master/arts/rotate.png" width="50" alt="Rotate screen" />
+  <img src="https://github.com/NeoLSN/DialogAlchemy/blob/master/arts/device_landscape.png" width="300" alt="Landscape image" />
 </p>
 
 Installation
@@ -29,12 +29,10 @@ API
 - Material - Basic dialog model for most of Android Dialog library
 - PhilosopherStone - There are two purpose for Philosopher Stone
   1. A interface for custom view (main purpose)
-  2. Expand the Dialog library ability
-  - Be a model, not be a controller
-- TransmutationCircle - A interface for dialog creation factory
+  2. Expand the Dialog library ability that Material didn't support
+- TransmutationCircle - A interface for dialog creation factory. There are 2 notices.
   1. Should satisfy Material model requirement
   2. At least process PhilosopherStone as a custom view
-  3. Increase
 - DialogAlchemy - A utility class to show a dialog
 
 Usage
