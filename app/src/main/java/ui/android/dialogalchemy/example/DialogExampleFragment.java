@@ -77,7 +77,7 @@ public class DialogExampleFragment extends Fragment {
         hackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createHackingDialog();
+                createSorceryDialog();
             }
         });
     }
@@ -137,7 +137,7 @@ public class DialogExampleFragment extends Fragment {
         DialogAlchemy.show(getFragmentManager(), builder.build());
     }
 
-    private void createHackingDialog() {
+    private void createSorceryDialog() {
         PhilosopherStone stone = new SorceryStone.Builder(getActivity())
                 .titleColor(Color.MAGENTA)
                 .titleGravity(GravityEnum.CENTER)
@@ -155,6 +155,7 @@ public class DialogExampleFragment extends Fragment {
                 .setPositiveButton(android.R.string.ok, null)
                 .setPhilosopherStone(stone);
 
-        DialogAlchemy.show(getFragmentManager(), builder.build(), new MaterialDialogsTransmutationCircle());
+        DialogAlchemy.show(getFragmentManager(), builder.build(),
+                new MaterialDialogsTransmutationCircle());
     }
 }
