@@ -3,10 +3,13 @@ DialogAlchemy
 
 [![Release](https://jitpack.io/v/NeoLSN/DialogAlchemy.svg?style=flat)](https://jitpack.io/#NeoLSN/DialogAlchemy)
 
-<img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_portrait.png" height="300" alt="Portrait image" />
-<img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_landscape.png" width="300" alt="Landscape image" />
-
 This is a dialog utility library. It provides a easy way to let developers deal with screen rotation issue.
+
+<p align="center">
+  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_portrait.png" height="300" alt="Portrait image" />
+  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/rotate.png" width="50" alt="Rotate screen" />
+  <img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_landscape.png" width="300" alt="Landscape image" />
+</p>
 
 Installation
 --------
@@ -23,7 +26,7 @@ dependencies {
 API
 --------
 - Alchemist - Dialog fragment
-- Material - Basic dialog model for most of Android Dialog library
+- Material - Basic dialog model for most of Android Dialog library
 - PhilosopherStone - There are two purpose for Philosopher Stone
   1. A interface for custom view (main purpose)
   2. Expand the Dialog library ability
