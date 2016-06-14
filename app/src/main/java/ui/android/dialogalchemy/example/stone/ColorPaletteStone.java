@@ -17,7 +17,6 @@ import ui.android.dialogalchemy.example.R;
 /**
  * Created by JasonYang on 2016/6/13.
  */
-
 public class ColorPaletteStone implements PhilosopherStone {
 
     private int color = Color.CYAN;

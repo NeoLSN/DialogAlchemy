@@ -3,6 +3,7 @@ package ui.android.dialogalchemy.example;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +12,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.Theme;
+
 import ui.android.dialogalchemy.DialogAlchemy;
 import ui.android.dialogalchemy.Material;
+import ui.android.dialogalchemy.PhilosopherStone;
 import ui.android.dialogalchemy.circle.MetalTransmutationCircle;
 import ui.android.dialogalchemy.example.circle.AlertDialogProTransmutationCircle;
 import ui.android.dialogalchemy.example.circle.MaterialDialogsTransmutationCircle;
 import ui.android.dialogalchemy.example.stone.ColorPaletteStone;
+import ui.android.dialogalchemy.example.stone.SorceryStone;
 
 /**
  * Created by JasonYang on 2016/6/7.
@@ -33,6 +39,8 @@ public class DialogExampleFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
+        // Transmutation Circle demo
         Button testButton = (Button) view.findViewById(R.id.default_transmutation_circle);
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +48,6 @@ public class DialogExampleFragment extends Fragment {
                 createDialog();
             }
         });
-
         Button alertProButton = (Button) view.findViewById(R.id.alert_pro_transmutation_circle);
         alertProButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +55,6 @@ public class DialogExampleFragment extends Fragment {
                 createAlertProDialog();
             }
         });
-
         Button mdCircleButton = (Button) view.findViewById(R.id.md_transmutation_circle);
         mdCircleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +63,21 @@ public class DialogExampleFragment extends Fragment {
             }
         });
 
+        // Custom philosopher stone demo
         Button colorPaletteButton = (Button) view.findViewById(R.id.color_palette_button);
         colorPaletteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createColorPaletteDialog();
+            }
+        });
+
+        // Extension demo
+        Button hackingButton = (Button) view.findViewById(R.id.hacking_button);
+        hackingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createHackingDialog();
             }
         });
     }
@@ -115,5 +131,26 @@ public class DialogExampleFragment extends Fragment {
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPhilosopherStone(new ColorPaletteStone());
         DialogAlchemy.show(getFragmentManager(), builder.build());
+    }
+
+    private void createHackingDialog() {
+        PhilosopherStone stone = new SorceryStone.Builder(getActivity())
+                .titleColor(Color.MAGENTA)
+                .titleGravity(GravityEnum.CENTER)
+                .contentColor(Color.CYAN)
+                .contentGravity(GravityEnum.CENTER)
+                .buttonRippleColor(Color.YELLOW)
+                .contentLineSpacing(2.0f)
+                .theme(Theme.DARK)
+                .setPhilosopherStone(new ColorPaletteStone()) // special power
+                .build();
+
+        Material.Builder builder = new Material.Builder(getActivity())
+                .setTitle("Sorcery Stone")
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, null)
+                .setPhilosopherStone(stone);
+
+        DialogAlchemy.show(getFragmentManager(), builder.build(), new MaterialDialogsTransmutationCircle());
     }
 }

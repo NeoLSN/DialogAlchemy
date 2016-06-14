@@ -47,23 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:text="Material Extension"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Working..."
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:text="Philosopher Stones"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
@@ -74,5 +57,28 @@
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
             android:text="Color Palette"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Material Extension"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Use philosopher stone to increase the power."
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <Button
+            android:id="@+id/hacking_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Sorcery Stone"/>
     </LinearLayout>
 </ScrollView>
