@@ -1,4 +1,4 @@
-package ui.android.dialogalchemy;
+package ui.android.dialogalchemy.example;
 
 import org.junit.Test;
 

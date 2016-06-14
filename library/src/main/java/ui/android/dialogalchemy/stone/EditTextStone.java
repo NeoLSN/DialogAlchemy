@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -41,6 +42,11 @@ public class EditTextStone implements PhilosopherStone {
     @NonNull
     @Override
     public Material mergeMaterial(@NonNull Context context, @NonNull Material material) {
+        if (TextUtils.isEmpty(material.getPositiveButtonText())) {
+            Material.Builder builder = material.rebuild(context);
+            builder.setPositiveButton(android.R.string.ok, null);
+            material = builder.build();
+        }
         return material;
     }
 

@@ -1,33 +1,35 @@
-package ui.android.dialogalchemy.circle;
+package ui.android.dialogalchemy.example.circle;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.alertdialogpro.AlertDialogPro;
 
 import ui.android.dialogalchemy.Material;
 import ui.android.dialogalchemy.PhilosopherStone;
 import ui.android.dialogalchemy.TransmutationCircle;
 
 /**
- * Created by JasonYang on 2016/6/1.
+ * Created by JasonYang on 2016/6/13.
  */
-public class MetalTransmutationCircle implements TransmutationCircle {
+
+public class AlertDialogProTransmutationCircle implements TransmutationCircle {
 
     @Override
     public Dialog createDialog(@NonNull Context context, @NonNull Material material) {
 
         final PhilosopherStone stone = material.getPhilosopherStone();
 
-        final AlertDialog.Builder builder;
+        final AlertDialogPro.Builder builder;
         if (material.getTheme() != 0) {
-            builder = new AlertDialog.Builder(context, material.getTheme());
+            builder = new AlertDialogPro.Builder(context, material.getTheme());
         } else {
-            builder = new AlertDialog.Builder(context);
+            builder = new AlertDialogPro.Builder(context);
         }
 
         if (!TextUtils.isEmpty(material.getTitle())) {
@@ -89,12 +91,15 @@ public class MetalTransmutationCircle implements TransmutationCircle {
 
         // stone
         if (stone != null && stone.getLayoutResId() != 0) {
-            builder.setView(stone.getLayoutResId());
+            //builder.setView(stone.getLayoutResId());
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(stone.getLayoutResId(), null);
+            builder.setView(view);
         }
         builder.setCancelable(material.isCancelable());
 
         // create
-        final AlertDialog dialog = builder.create();
+        final AlertDialogPro dialog = builder.create();
 
         // after create
         dialog.setOnShowListener(material.getOnShowListener());

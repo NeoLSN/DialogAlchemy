@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.TimePicker;
 
 import ui.android.dialogalchemy.Material;
@@ -31,6 +32,11 @@ public class TimePickerStone implements PhilosopherStone {
     @NonNull
     @Override
     public Material mergeMaterial(@NonNull Context context, @NonNull Material material) {
+        if (TextUtils.isEmpty(material.getPositiveButtonText())) {
+            Material.Builder builder = material.rebuild(context);
+            builder.setPositiveButton(android.R.string.ok, null);
+            material = builder.build();
+        }
         return material;
     }
 

@@ -12,11 +12,11 @@ import android.support.annotation.NonNull;
  */
 public interface PhilosopherStone {
 
-    @LayoutRes
-    int getLayoutResId();
-
     @NonNull
     Material mergeMaterial(@NonNull Context context, @NonNull Material material);
+
+    @LayoutRes
+    int getLayoutResId();
 
     void bindView(Dialog dialog);
 

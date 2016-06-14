@@ -1,6 +1,11 @@
 DialogAlchemy
 ========
 
+[![Release](https://jitpack.io/v/NeoLSN/DialogAlchemy.svg?style=flat)](https://jitpack.io/#NeoLSN/DialogAlchemy)
+
+<img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_portrait.png" height="300" alt="Portrait image" />
+<img src="https://github.com/NeoLSN/DialogAlchemy/raw/master/arts/device_landscape.png" width="300" alt="Landscape image" />
+
 This is a dialog utility library. It provides a easy way to let developers deal with screen rotation issue.
 
 Installation
@@ -12,20 +17,26 @@ repositories {
 }
 dependencies {
     ...
-    compile 'com.github.NeoLSN:DialogAlchemy:1.0.0'
+    compile 'com.github.NeoLSN:DialogAlchemy:1.1.0'
 }
 ```
 API
 --------
 - Alchemist - Dialog fragment
-- Material - Basic dialog model
-- PhilosopherStone - A interface for custom view
+- Material - Basic dialog model for most of Android Dialog library
+- PhilosopherStone - There are two purpose for Philosopher Stone
+  1. A interface for custom view (main purpose)
+  2. Expand the Dialog library ability
+  - Be a model, not be a controller
 - TransmutationCircle - A interface for dialog creation factory
+  1. Should satisfy Material model requirement
+  2. At least process PhilosopherStone as a custom view
+  3. Increase
 - DialogAlchemy - A utility class to show a dialog
 
 Usage
 --------
-##### Basic Usage
+#### Basic Usage
 ```Java
     Material material = new Material.Builder(getActivity())
         .setTitle("Dialog Title")
@@ -33,7 +44,7 @@ Usage
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ... do something ...
+                ... Do something ...
             }
         })
         .setNegativeButton(android.R.string.cancel, null)
@@ -42,7 +53,7 @@ Usage
     Alchemist alchemist = DialogAlchemy.show(getFragmentManager(), material);
 ```
 
-##### Advanced Usage
+#### Advanced Usage
 ```Java
     //Create a custom view
     PhilosopherStone stone = new EditTextStone.Builder()
@@ -56,7 +67,7 @@ Usage
         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ... do something ...
+                ... Do something ...
             }
         })
         .setNegativeButton(android.R.string.cancel, null)
@@ -83,7 +94,7 @@ When ```DialogAlchemy.show()``` called, it will set a tag to ```Alchemist``` aut
             Material material = alchemist.getMaterial();
             Material.Builder builder = material.rebuild(this);
 
-            // reset listner or callback in here
+            // reset listener or callback in here
 
             Material newMaterial = builder.build();
             alchemist.setMaterial(newMaterial);
@@ -109,7 +120,7 @@ When ```DialogAlchemy.show()``` called, it will set a tag to ```Alchemist``` aut
             Material material = alchemist.getMaterial();
             Material.Builder builder = material.rebuild(this);
 
-            // reset listner or callback in here
+            // reset listener or callback in here
 
             Material newMaterial = builder.build();
             alchemist.setMaterial(newMaterial);
@@ -123,3 +134,33 @@ When ```DialogAlchemy.show()``` called, it will set a tag to ```Alchemist``` aut
         super.onSaveInstanceState(outState);
     }
 ```
+#### Set default TransmutationCircle
+```Java
+public class DemoApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ...
+        DialogAlchemy.setDefaultCircle(new MetalTransmutationCircle());
+    }
+}
+```
+
+License
+--------
+
+    Copyright (C) 2016 Jason Yang
+    Copyright (C) 2007 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
