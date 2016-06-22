@@ -33,7 +33,7 @@ dependencies {
 
     compile 'com.github.fengdai:alertdialogpro-core:0.2.6@aar'
     compile 'com.github.fengdai:alertdialogpro-theme-holo:0.2.6@aar'
-    compile 'com.afollestad.material-dialogs:core:0.8.5.9@aar'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.0@aar'
 
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
