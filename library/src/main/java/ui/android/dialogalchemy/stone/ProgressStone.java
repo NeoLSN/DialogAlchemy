@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -73,11 +72,6 @@ public class ProgressStone implements PhilosopherStone {
     @NonNull
     @Override
     public Material mergeMaterial(@NonNull Context context, @NonNull Material material) {
-        if (TextUtils.isEmpty(material.getPositiveButtonText())) {
-            Material.Builder builder = material.rebuild(context);
-            builder.setPositiveButton(android.R.string.ok, null);
-            material = builder.build();
-        }
         return material;
     }
 

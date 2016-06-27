@@ -20,7 +20,7 @@ repositories {
 }
 dependencies {
     ...
-    compile 'com.github.NeoLSN:DialogAlchemy:1.1.1'
+    compile 'com.github.NeoLSN:DialogAlchemy:1.1.2'
 }
 ```
 API
